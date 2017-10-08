@@ -104,4 +104,70 @@ class LinkedListTest < Minitest::Test
 
     assert_equal "The Rhodes family, followed by the Hardy family", list.to_string
   end
+
+  def test_append_for_surname_Brooks
+    list = LinkedList.new
+
+    assert_instance_of Node, list.append("Brooks")
+    assert_nil list.head.next_node
+  end
+
+  def test_to_string_with_Brooks_family
+    list = LinkedList.new
+    list.append("Brooks")
+
+    assert_equal "The Brooks family", list.to_string
+  end
+
+  def test_append_for_surname_Henderson
+    list = LinkedList.new
+
+    assert_instance_of Node, list.append("Henderson")
+    assert_nil list.head.next_node
+  end
+
+  def test_prepend_method
+    list = LinkedList.new
+    list.append("Brooks")
+
+    assert_instance_of Node, list.prepend("McKinney")
+    assert_instance_of Node, list.head.next_node
+  end
+
+  def test_string_can_hold_three_families
+    list = LinkedList.new
+    list.prepend("McKinney")
+    list.append("Brooks")
+    list.append("Henderson")
+
+    assert_equal "The McKinney family, followed by the Brooks family, followed by the Henderson family", list.to_string
+  end
+
+  def test_string_can_count_to_three
+    list = LinkedList.new
+    list.prepend("McKinney")
+    list.append("Brooks")
+    list.append("Henderson")
+
+    assert_equal 3, list.count
+  end
+
+  def test_insert_method_works
+    list = LinkedList.new
+    list.prepend("McKinney")
+    list.append("Brooks")
+    list.append("Henderson")
+    
+    assert_instance_of Node, list.insert(1, "Lawson")
+  end
+
+  def test_string_can_count_to_three
+    list = LinkedList.new
+    list.prepend("McKinney")
+    list.append("Brooks")
+    list.append("Henderson")
+    list.insert(1, "Lawson")
+
+    assert_equal "The McKinney family, followed by the Lawson family, followed by the Brooks family, followed by the Henderson family", list.to_string
+  end
 end
