@@ -49,4 +49,59 @@ class LinkedListTest < Minitest::Test
 
     assert_equal "The West family", list.to_string
   end
+
+  def test_head_node_can_change_again
+    list = LinkedList.new
+
+    assert_instance_of Node, list.append("Rhodes")
+  end
+
+  def test_the_list_has_new_head
+    list = LinkedList.new("Rhodes")
+
+    assert_instance_of LinkedList, list
+  end
+
+  def test_new_head_is_new_surname
+    list = LinkedList.new
+    list.append("Rhodes")
+
+    assert_instance_of Node, list.head
+  end
+
+  def test_next_node_is_still_nil
+    list = LinkedList.new
+    list.append("Rhodes")
+
+    assert_nil list.head.next_node
+  end
+
+  def test_append_with_even_newer_surname
+    list = LinkedList.new
+
+    assert_instance_of Node, list.append("Hardy")
+  end
+
+  def test_the_next_node_is_still_nil_with_two_count
+    list = LinkedList.new
+    list.append("Hardy")
+
+    assert_nil list.head.next_node
+  end
+
+  def test_count_for_second_family
+    list = LinkedList.new
+    list.append("Hardy")
+    list.append("Rhodes")
+
+    assert_equal 2, list.count
+  end
+
+  def test_new_string_with_two_families_works
+    list = LinkedList.new
+    list.append("Rhodes")
+    list.append("Hardy")
+
+    assert_equal "The Rhodes family, followed by the Hardy family", list.to_string
+  end
 end
