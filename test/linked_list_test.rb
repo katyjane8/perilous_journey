@@ -157,7 +157,7 @@ class LinkedListTest < Minitest::Test
     list.prepend("McKinney")
     list.append("Brooks")
     list.append("Henderson")
-    
+
     assert_instance_of Node, list.insert(1, "Lawson")
   end
 
@@ -170,4 +170,39 @@ class LinkedListTest < Minitest::Test
 
     assert_equal "The McKinney family, followed by the Lawson family, followed by the Brooks family, followed by the Henderson family", list.to_string
   end
+
+  def test_find_method
+    # find takes two parameters, the first indicates the first position to return and the second parameter specifies how many elements to return.
+    list = LinkedList.new
+    list.prepend("Lawson")
+    list.append("Henderson")
+    list.append("Brooks")
+
+    assert_equal "The Brooks family", list.find(2, 1)
+  end
+
+  def test_find_method_with_different_number_of_elements
+    list = LinkedList.new
+    list.prepend("Lawson")
+    list.append("Brooks")
+    list.append("Henderson")
+
+    assert_equal "The Lawson family, followed by the Brooks family, followed by the Henderson family", list.find(1, 3)
+
+  end
+  # > list.includes?("Brooks")
+  # => true
+  # > list.includes?("Chapman")
+  # => false
+
+  def test_pop_method
+    # > list.pop
+    # The Henderson family has died of dysentery
+  end
+  # => <Node surname="Henderson" next_node=nil #5678904567890>
+  # > list.pop
+  # The Brooks family has died of dysentery
+  # => <Node surname="Brooks" next_node=nil #5678904567890>
+  # > list.to_string
+  # => "The McKinney family, followed by the Lawson family"
 end

@@ -61,4 +61,12 @@ class LinkedList
     current_node.next_node = new_node
   end
 
+  def find(position, elements)
+    current_node = @head
+    position.times do |name|
+      current_node = current_node.next_node
+    end
+    family_string = "The #{current_node.surname} family"
+  end
+
 end
