@@ -161,7 +161,7 @@ class LinkedListTest < Minitest::Test
     assert_instance_of Node, list.insert(1, "Lawson")
   end
 
-  def test_string_can_count_to_three
+  def test_to_string_method_can_count_to_three
     list = LinkedList.new
     list.prepend("McKinney")
     list.append("Brooks")
@@ -183,17 +183,24 @@ class LinkedListTest < Minitest::Test
 
   def test_find_method_with_different_number_of_elements
     list = LinkedList.new
-    list.prepend("Lawson")
+    list.append("Welyczko")
+    list.append("Lawson")
     list.append("Brooks")
     list.append("Henderson")
 
     assert_equal "The Lawson family, followed by the Brooks family, followed by the Henderson family", list.find(1, 3)
-
   end
-  # > list.includes?("Brooks")
-  # => true
-  # > list.includes?("Chapman")
-  # => false
+
+  def test_includes_has_surname_values
+    list = LinkedList.new
+    list.append("Welyczko")
+    list.append("Lawson")
+    list.append("Brooks")
+    list.append("Henderson")
+
+    assert_equal true, list.includes?("Brooks")
+    assert_equal false, list.includes?("Chapman")
+  end
 
   def test_pop_method
     # > list.pop

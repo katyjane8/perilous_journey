@@ -5,28 +5,32 @@ class LinkedList
   attr_accessor :head
   def initialize(head = nil)
     @head = head
-    @count = 0
+    @node_count = 0
+  end
+
+  def tail?
+    node.next_node.nil?
   end
 
   def append(surname)
     if @head == nil
       @head = Node.new(surname)
-    elsif
-      @head.next_node.nil?
-      @head.next_node = Node.new(surname)
     else
-      @head.next_node.next_node.nil?
-      @head.next_node.next_node = Node.new(surname)
+      current = @head
+      until current.next_node.nil?
+        current = current.next_node
+      end
+      current.next_node = Node.new(surname)
     end
   end
 
   def count
   current_node = @head
     until current_node.nil?
-      @count += 1
+      @node_count += 1
       current_node = current_node.next_node
     end
-    @count
+    @node_count
   end
 
   def to_string
@@ -49,11 +53,10 @@ class LinkedList
     end
   end
 
-  #refactor here
   def insert(index, surname)
     return nil if @head == nil
     current_node = @head
-    (index-1).times do |node|
+    (index-1).times do
       current_node = current_node.next_node
     end
     new_node = Node.new(surname)
@@ -61,12 +64,29 @@ class LinkedList
     current_node.next_node = new_node
   end
 
+  #refactor here - clean this up
   def find(position, elements)
     current_node = @head
-    position.times do |name|
+    return nil if @head == nil
+    position.times do
       current_node = current_node.next_node
     end
     family_string = "The #{current_node.surname} family"
+    until current_node.next_node.nil?
+      family_string << ", followed by the #{current_node.next_node.surname} family"
+      current_node = current_node.next_node
+    end
+    family_string
+  end
+
+  def includes?(value, head = @head)
+    if head.surname == value
+      true
+    elsif head.next_node.nil?
+      false
+    else
+      includes?(value, head.next_node)
+    end
   end
 
 end
