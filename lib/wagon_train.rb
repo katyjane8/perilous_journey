@@ -11,4 +11,8 @@ class WagonTrain
     list.append(surname)
   end
 
+  def count
+    list.count
+  end
+
 end

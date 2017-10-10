@@ -36,9 +36,19 @@ class WagonTrainTest < Minitest::Test
     assert_equal "Burke", wt.list.head.surname
   end
 
+  def test_append_within_wagon_train_with_new_surname
+    wt = WagonTrain.new
 
-# > wt.append("West")
-# => <Node surname="West" next_node=nil #5678904567890>
-# > wt.count
-# 2
+    assert_instance_of Node, wt.append("West")
+    assert_nil wt.list.head.next_node
+  end
+
+  def test_list_has_a_count
+    wt = WagonTrain.new
+    wt.append("West")
+    wt.append("Burke")
+
+    assert_equal 2, wt.count
+  end
+
 end
