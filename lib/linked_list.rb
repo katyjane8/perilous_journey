@@ -16,15 +16,15 @@ class LinkedList
     node.next_node.next_node.nil?
   end
 
-  def append(surname)
-    if @head == nil
-      @head = Node.new(surname)
+  def append(surname, supplies = {})
+    if @head.nil?
+      @head = Node.new(surname, supplies)
     else
       current = @head
       until current.next_node.nil?
         current = current.next_node
       end
-      current.next_node = Node.new(surname)
+      current.next_node = Node.new(surname, supplies)
     end
   end
 
@@ -47,7 +47,7 @@ class LinkedList
     family_list
   end
 
-  def prepend(surname)
+  def prepend(surname, supplies = nil)
     node = Node.new(surname)
     if @head == nil
       @head = node
@@ -57,7 +57,7 @@ class LinkedList
     end
   end
 
-  def insert(index, surname)
+  def insert(index, surname, supplies = nil)
     return nil if @head == nil
     current_node = @head
     (index-1).times do
