@@ -202,14 +202,59 @@ class LinkedListTest < Minitest::Test
     assert_equal false, list.includes?("Chapman")
   end
 
-  def test_pop_method
-    # > list.pop
-    # The Henderson family has died of dysentery
+  def test_pop_method_count
+    list = LinkedList.new
+    list.append("Welyczko")
+    list.append("Lawson")
+    list.append("Brooks")
+    list.append("Henderson")
+
+    assert_equal 4, list.count
   end
-  # => <Node surname="Henderson" next_node=nil #5678904567890>
-  # > list.pop
-  # The Brooks family has died of dysentery
-  # => <Node surname="Brooks" next_node=nil #5678904567890>
-  # > list.to_string
-  # => "The McKinney family, followed by the Lawson family"
+
+  def test_pop_returns_dysentery_string
+    list = LinkedList.new
+    list.append("Welyczko")
+    list.append("Lawson")
+    list.append("Brooks")
+    list.append("Henderson")
+
+    assert_output(/The Henderson family has died of dysentery/) {list.pop}
+  end
+
+  def test_pop_returns_next_node_as_nil
+    list = LinkedList.new
+    list.append("Welyczko")
+    list.append("Lawson")
+    list.append("Brooks")
+    list.append("Henderson")
+
+    assert_instance_of Node, list.pop
+  end
+
+  def test_pop_removes_another_last_node
+    list = LinkedList.new
+    list.append("Welyczko")
+    list.append("Lawson")
+    list.append("Brooks")
+
+    assert_output(/The Brooks family has died of dysentery/) {list.pop}
+  end
+
+  def test_pop_returns_next_node_as_nil
+    list = LinkedList.new
+    list.append("Welyczko")
+    list.append("Lawson")
+    list.append("Brooks")
+
+    assert_instance_of Node, list.pop
+  end
+
+  def test_find_method_with_different_number_of_elements
+    list = LinkedList.new
+    list.append("McKinney")
+    list.append("Lawson")
+
+    assert_equal "The McKinney family, followed by the Lawson family", list.to_string
+  end
 end

@@ -8,8 +8,12 @@ class LinkedList
     @node_count = 0
   end
 
-  def tail?
-    node.next_node.nil?
+  def tail?(current_node)
+    current_node.next_node.nil?
+  end
+
+  def before_tail?(node)
+    node.next_node.next_node.nil?
   end
 
   def append(surname)
@@ -79,13 +83,25 @@ class LinkedList
     family_string
   end
 
-  def includes?(value, head = @head)
-    if head.surname == value
+  def includes?(value, node = @head)
+    if node.surname == value
       true
-    elsif head.next_node.nil?
+    elsif node.next_node.nil?
       false
     else
-      includes?(value, head.next_node)
+      includes?(value, node.next_node)
+    end
+  end
+
+  def pop(node = @head)
+    dead = node.next_node.next_node.nil?
+    if dead
+      killed = node.next_node
+      node.next_node = nil
+      puts "The #{killed.surname} family has died of dysentery"
+      killed
+    else
+      pop(node.next_node)
     end
   end
 
