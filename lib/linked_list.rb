@@ -8,8 +8,8 @@ class LinkedList
     @node_count = 0
   end
 
-  def tail?(current_node)
-    current_node.next_node.nil?
+  def tail?(current)
+    current.next_node.nil?
   end
 
   def before_tail?(node)
@@ -21,7 +21,7 @@ class LinkedList
       @head = Node.new(surname, supplies)
     else
       current = @head
-      until current.next_node.nil?
+      until tail?(current)
         current = current.next_node
       end
       current.next_node = Node.new(surname, supplies)
@@ -40,7 +40,7 @@ class LinkedList
   def to_string
     current_node = @head
     family_list = "The #{head.surname} family"
-    until current_node.next_node.nil?
+    until tail?(current_node)
       current_node = current_node.next_node
       family_list << ", followed by the #{current_node.surname} family"
     end
@@ -58,7 +58,7 @@ class LinkedList
   end
 
   def insert(index, surname, supplies = nil)
-    return nil if @head == nil
+    return nil if @head.nil?
     current_node = @head
     (index-1).times do
       current_node = current_node.next_node
@@ -71,7 +71,7 @@ class LinkedList
   #refactor here - clean this up
   def find(position, elements)
     current_node = @head
-    return nil if @head == nil
+    return nil if @head.nil?
     position.times do
       current_node = current_node.next_node
     end
