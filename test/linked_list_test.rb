@@ -29,10 +29,45 @@ class LinkedListTest < Minitest::Test
     assert_nil list.head
   end
 
+  def test_new_head_is_new_surname
+    list = LinkedList.new
+    list.append("Rhodes")
+
+    assert_instance_of Node, list.head
+  end
+
   def test_node_after_head_is_nil
     list = LinkedList.new
     list.append("West")
 
+    assert_nil list.head.next_node
+  end
+
+  def test_next_node_is_still_nil
+    list = LinkedList.new
+    list.append("Rhodes")
+
+    assert_nil list.head.next_node
+  end
+
+  def test_the_next_node_is_still_nil_with_two_count
+    list = LinkedList.new
+    list.append("Hardy")
+
+    assert_nil list.head.next_node
+  end
+
+  def test_append_for_surname_and_next_node_is_nil
+    list = LinkedList.new
+
+    assert_instance_of Node, list.append("Brooks")
+    assert_nil list.head.next_node
+  end
+
+  def test_append_for_surname_Henderson
+    list = LinkedList.new
+
+    assert_instance_of Node, list.append("Henderson")
     assert_nil list.head.next_node
   end
 
@@ -48,48 +83,17 @@ class LinkedListTest < Minitest::Test
     assert_instance_of Node, list.append("Rhodes")
   end
 
-
-  def test_list_has_a_count
-    list = LinkedList.new
-    list.append("West")
-
-    assert_equal 1, list.count
-  end
-
-  def test_list_can_be_string
-    list = LinkedList.new
-    list.append("West")
-
-    assert_equal "The West family", list.to_string
-  end
-
-
-
-  def test_new_head_is_new_surname
-    list = LinkedList.new
-    list.append("Rhodes")
-
-    assert_instance_of Node, list.head
-  end
-
-  def test_next_node_is_still_nil
-    list = LinkedList.new
-    list.append("Rhodes")
-
-    assert_nil list.head.next_node
-  end
-
   def test_append_with_even_newer_surname
     list = LinkedList.new
 
     assert_instance_of Node, list.append("Hardy")
   end
 
-  def test_the_next_node_is_still_nil_with_two_count
+  def test_list_has_a_count
     list = LinkedList.new
-    list.append("Hardy")
+    list.append("West")
 
-    assert_nil list.head.next_node
+    assert_equal 1, list.count
   end
 
   def test_count_for_second_family
@@ -100,33 +104,68 @@ class LinkedListTest < Minitest::Test
     assert_equal 2, list.count
   end
 
-  def test_new_string_with_two_families_works
+  def test_string_can_count_to_three
     list = LinkedList.new
-    list.append("Rhodes")
-    list.append("Hardy")
+    list.prepend("McKinney")
+    list.append("Brooks")
+    list.append("Henderson")
 
-    assert_equal "The Rhodes family, followed by the Hardy family", list.to_string
+    assert_equal 3, list.count
   end
 
-  def test_append_for_surname_Brooks
+  def test_pop_method_count
     list = LinkedList.new
+    list.append("Welyczko")
+    list.append("Lawson")
+    list.append("Brooks")
+    list.append("Henderson")
 
-    assert_instance_of Node, list.append("Brooks")
-    assert_nil list.head.next_node
+    assert_equal 4, list.count
+  end
+
+  def test_list_can_be_string
+    list = LinkedList.new
+    list.append("West")
+    result = list.to_string
+
+    assert_equal "The West family", result
   end
 
   def test_to_string_with_Brooks_family
     list = LinkedList.new
     list.append("Brooks")
+    result = list.to_string
 
-    assert_equal "The Brooks family", list.to_string
+    assert_equal "The Brooks family", result
   end
 
-  def test_append_for_surname_Henderson
+  def test_new_string_with_two_families_works
     list = LinkedList.new
+    list.append("Rhodes")
+    list.append("Hardy")
+    result = list.to_string
 
-    assert_instance_of Node, list.append("Henderson")
-    assert_nil list.head.next_node
+    assert_equal "The Rhodes family, followed by the Hardy family", result
+  end
+
+  def test_to_string_method_can_count_to_three
+    list = LinkedList.new
+    list.prepend("McKinney")
+    list.append("Brooks")
+    list.append("Henderson")
+    list.insert(1, "Lawson")
+    result = list.to_string
+
+    assert_equal "The McKinney family, followed by the Lawson family, followed by the Brooks family, followed by the Henderson family", result
+  end
+
+  def test_find_method_with_different_number_of_elements
+    list = LinkedList.new
+    list.append("McKinney")
+    list.append("Lawson")
+    result = list.to_string
+
+    assert_equal "The McKinney family, followed by the Lawson family", result
   end
 
   def test_prepend_method
@@ -142,17 +181,9 @@ class LinkedListTest < Minitest::Test
     list.prepend("McKinney")
     list.append("Brooks")
     list.append("Henderson")
+    result = list.to_string
 
-    assert_equal "The McKinney family, followed by the Brooks family, followed by the Henderson family", list.to_string
-  end
-
-  def test_string_can_count_to_three
-    list = LinkedList.new
-    list.prepend("McKinney")
-    list.append("Brooks")
-    list.append("Henderson")
-
-    assert_equal 3, list.count
+    assert_equal "The McKinney family, followed by the Brooks family, followed by the Henderson family", result
   end
 
   def test_insert_method_works
@@ -164,18 +195,7 @@ class LinkedListTest < Minitest::Test
     assert_instance_of Node, list.insert(1, "Lawson")
   end
 
-  def test_to_string_method_can_count_to_three
-    list = LinkedList.new
-    list.prepend("McKinney")
-    list.append("Brooks")
-    list.append("Henderson")
-    list.insert(1, "Lawson")
-
-    assert_equal "The McKinney family, followed by the Lawson family, followed by the Brooks family, followed by the Henderson family", list.to_string
-  end
-
   def test_find_method
-    # find takes two parameters, the first indicates the first position to return and the second parameter specifies how many elements to return.
     list = LinkedList.new
     list.prepend("Lawson")
     list.append("Henderson")
@@ -205,15 +225,6 @@ class LinkedListTest < Minitest::Test
     assert_equal false, list.includes?("Chapman")
   end
 
-  def test_pop_method_count
-    list = LinkedList.new
-    list.append("Welyczko")
-    list.append("Lawson")
-    list.append("Brooks")
-    list.append("Henderson")
-
-    assert_equal 4, list.count
-  end
 
   def test_pop_returns_dysentery_string
     list = LinkedList.new
@@ -225,16 +236,6 @@ class LinkedListTest < Minitest::Test
     assert_output(/The Henderson family has died of dysentery/) {list.pop}
   end
 
-  def test_pop_returns_next_node_as_nil
-    list = LinkedList.new
-    list.append("Welyczko")
-    list.append("Lawson")
-    list.append("Brooks")
-    list.append("Henderson")
-
-    assert_instance_of Node, list.pop
-  end
-
   def test_pop_removes_another_last_node
     list = LinkedList.new
     list.append("Welyczko")
@@ -244,7 +245,17 @@ class LinkedListTest < Minitest::Test
     assert_output(/The Brooks family has died of dysentery/) {list.pop}
   end
 
-  def test_pop_returns_next_node_as_nil
+  def test_pop_returns_next_node_as_nil_with_four_elements
+    list = LinkedList.new
+    list.append("Welyczko")
+    list.append("Lawson")
+    list.append("Brooks")
+    list.append("Henderson")
+
+    assert_instance_of Node, list.pop
+  end
+
+  def test_pop_returns_next_node_as_nil_with_three_elements
     list = LinkedList.new
     list.append("Welyczko")
     list.append("Lawson")
@@ -253,11 +264,4 @@ class LinkedListTest < Minitest::Test
     assert_instance_of Node, list.pop
   end
 
-  def test_find_method_with_different_number_of_elements
-    list = LinkedList.new
-    list.append("McKinney")
-    list.append("Lawson")
-
-    assert_equal "The McKinney family, followed by the Lawson family", list.to_string
-  end
 end

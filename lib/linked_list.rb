@@ -1,5 +1,4 @@
 require_relative 'node'
-require 'pry'
 
 class LinkedList
   attr_accessor :head
@@ -49,7 +48,7 @@ class LinkedList
 
   def prepend(surname, supplies = nil)
     node = Node.new(surname)
-    if @head == nil
+    if @head.nil?
       @head = node
     else
       node.next_node = @head
@@ -68,7 +67,6 @@ class LinkedList
     current_node.next_node = new_node
   end
 
-  #refactor here - clean this up
   def find(position, elements)
     current_node = @head
     return nil if @head.nil?
@@ -94,7 +92,7 @@ class LinkedList
   end
 
   def pop(node = @head)
-    dead = node.next_node.next_node.nil?
+    dead = before_tail?(node)
     if dead
       killed = node.next_node
       node.next_node = nil
