@@ -74,7 +74,7 @@ class LinkedList
       current_node = current_node.next_node
     end
     family_string = "The #{current_node.surname} family"
-    until current_node.next_node.nil?
+    (elements-1).times do
       family_string << ", followed by the #{current_node.next_node.surname} family"
       current_node = current_node.next_node
     end

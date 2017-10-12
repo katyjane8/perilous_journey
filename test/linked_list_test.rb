@@ -1,5 +1,4 @@
 require 'minitest/autorun'
-require 'minitest/pride'
 require 'minitest/emoji'
 require './lib/node'
 require './lib/linked_list'
@@ -27,6 +26,24 @@ class LinkedListTest < Minitest::Test
     list = LinkedList.new
 
     assert_nil list.head
+  end
+
+  def test_tail_can_be_found
+    list = LinkedList.new
+    current = list.append("Lannister")
+    assert true, list.tail?(current)
+
+    list.append("Stark")
+    refute_equal "Stark", list.tail?(current)
+  end
+
+  def test_before_tail_method_is_valid
+    list = LinkedList.new
+    node = list.append("Tyrell")
+    list.append("Martell")
+    list.append("Stark")
+
+    assert true, list.before_tail?(node)
   end
 
   def test_new_head_is_new_surname
@@ -195,6 +212,15 @@ class LinkedListTest < Minitest::Test
     assert_instance_of Node, list.insert(1, "Lawson")
   end
 
+  def test_insert_method_works_in_another_position
+    list = LinkedList.new
+    list.prepend("McKinney")
+    list.append("Brooks")
+    list.append("Henderson")
+
+    assert_instance_of Node, list.insert(2, "Potter")
+  end
+
   def test_find_method
     list = LinkedList.new
     list.prepend("Lawson")
@@ -214,6 +240,16 @@ class LinkedListTest < Minitest::Test
     assert_equal "The Lawson family, followed by the Brooks family, followed by the Henderson family", list.find(1, 3)
   end
 
+  def test_find_method_another_schematic
+    list = LinkedList.new
+    list.append("Welyczko")
+    list.append("Lawson")
+    list.append("Brooks")
+    list.append("Henderson")
+
+    assert_equal "The Welyczko family, followed by the Lawson family", list.find(0, 2)
+  end
+
   def test_includes_has_surname_values
     list = LinkedList.new
     list.append("Welyczko")
@@ -223,8 +259,8 @@ class LinkedListTest < Minitest::Test
 
     assert_equal true, list.includes?("Brooks")
     assert_equal false, list.includes?("Chapman")
+    assert_equal true, list.includes?("Welyczko")
   end
-
 
   def test_pop_returns_dysentery_string
     list = LinkedList.new

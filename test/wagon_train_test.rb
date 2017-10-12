@@ -1,6 +1,5 @@
 require 'minitest/autorun'
 require 'minitest/emoji'
-require './lib/node'
 require './lib/linked_list'
 require './lib/wagon_train'
 
@@ -85,10 +84,19 @@ class WagonTrainTest < Minitest::Test
    wt.append("Burke", {"pounds of food" => 200})
    wt.append("Hardy", {"spare wagon tongues" => 3})
    wt.append("West", {"pounds of food" => 300})
-   # > wt.supplies
-   # => {"spare wagon tongues" => 3, "pounds of food" => 500}
 
    assert_equal ({"spare wagon tongues" => 3, "pounds of food" => 500}), wt.supplies
+ end
+
+ def test_more_supplies_can_be_added
+   wt = WagonTrain.new
+   wt.append("Burke", {"pounds of food" => 200})
+   wt.append("Hardy", {"spare wagon tongues" => 3})
+   wt.append("West", {"pounds of food" => 300})
+   wt.append("Peter", {"pounds of food" => 300})
+   wt.append("Laurel", {"spare wagon tongues" => 3})
+
+   assert_equal ({"spare wagon tongues" => 6, "pounds of food" => 800}), wt.supplies
  end
 
 end
